@@ -1,36 +1,31 @@
-import { Hono } from 'hono';
-import { serve } from '@hono/node-server';
-import { readFileSync } from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
+dotenv.config();
 
-console.log("Servidor iniciado con TypeScript");
+import express from "express";
+import cors from "cors";
+import { getAllFrases, createFrase } from "./db/queries.ts";
 
-// Necesario para usar __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-const app = new Hono();
+const app = express();
 
-// Ruta correcta del archivo frases.json
-const dataPath = path.join(__dirname, '../data/frases.json');
+app.use(cors());
+app.use(express.json());
 
-// Ruta principal
-app.get('/', (c) => {
-  return c.json({ message: "API de frases funcionando" });
+// Obtener todas las frases
+app.get("/frases", async (req, res) => {
+  const frases = await getAllFrases();
+  res.json(frases);
 });
 
-// GET /frases → devuelve todas las frases del JSON
-app.get('/frases', (c) => {
-  const file = readFileSync(dataPath, 'utf8');
-  const frases = JSON.parse(file);
-  return c.json(frases);
+// Crear frase
+app.post("/frases", async (req, res) => {
+  const { texto } = req.body;
+  const nuevaFrase = await createFrase(texto);
+  res.json(nuevaFrase);
 });
 
-// Iniciar servidor
-serve({
-  fetch: app.fetch,
-  port: 3000,
+app.listen(3000, () => {
+  console.log("Servidor escuchando en http://localhost:3000");
 });
 
-console.log("Servidor escuchando en http://localhost:3000");
+

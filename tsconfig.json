@@ -4,13 +4,9 @@
     "target": "esnext",
 
     "types": ["node"],
-
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
 
     "strict": true,
     "jsx": "react-jsx",
@@ -19,7 +15,9 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "esModuleInterop": true,
 
-    "esModuleInterop": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   }
 }
