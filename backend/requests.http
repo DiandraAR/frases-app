@@ -1,0 +1,31 @@
+### Obtener todas las frases
+GET http://localhost:3000/frases
+
+### Crear frase
+POST http://localhost:3000/frases
+Content-Type: application/json
+
+{
+  "texto": "“Es la vida, más que la muerte, la que no tiene límites”"
+}
+
+### Buscar frase por ID
+GET http://localhost:3000/frases/6
+
+### Editar frase
+PUT http://localhost:3000/frases/6
+Content-Type: application/json
+
+{
+  "texto": "“Es la vida, más que la muerte, la que no tiene límites”"
+}
+
+### Borrar frase
+DELETE http://localhost:3000/frases/7
+
+### Buscar por texto
+GET http://localhost:3000/frases/buscar/vida
+
+### Frase aleatoria
+GET http://localhost:3000/frases/random
+
