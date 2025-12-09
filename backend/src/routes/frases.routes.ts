@@ -6,7 +6,8 @@ import {
   updateFrase, 
   deleteFrase,
   buscarFrasesPorTexto,
-  fraseAleatoria
+  fraseAleatoria,
+  buscarFrasesPorCategoria
 } from "../db/queries.ts";
 
 const router = Router();
@@ -19,8 +20,11 @@ router.get("/", async (req, res) => {
 
 // Crear una frase
 router.post("/", async (req, res) => {
-  const { texto } = req.body;
-  const nuevaFrase = await createFrase(texto);
+  const { texto, categoria } = req.body;
+  if (!texto || !categoria) {
+    return res.status(400).json({ error: "Falta texto o categoría" });
+  }
+  const nuevaFrase = await createFrase(texto, categoria);
   res.json(nuevaFrase);
 });
 
@@ -44,7 +48,8 @@ router.get("/:id", async (req, res) => {
 
 // Editar frase
 router.put("/:id", async (req, res) => {
-  const frase = await updateFrase(Number(req.params.id), req.body.texto);
+  const { texto, categoria } = req.body;
+  const frase = await updateFrase(Number(req.params.id), texto, categoria);
   res.json(frase);
 });
 
@@ -54,8 +59,12 @@ router.delete("/:id", async (req, res) => {
   res.json({ mensaje: "Frase eliminada", eliminada });
 });
 
+// Obtener frases por categoría
+router.get("/categoria/:categoria", async (req, res) => {
+  const categoria = req.params.categoria;
+  const frases = await buscarFrasesPorCategoria(categoria);
+  res.json(frases);
+});
+
 export default router;
-
-
-
 

@@ -1,0 +1,1 @@
+ALTER TABLE "frases" ADD COLUMN "categoria" text NOT NULL;

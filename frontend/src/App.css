@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+.magic-btn {
+  background: #ffdd57;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.magic-btn:hover {
+  transform: scale(1.05);
+  background: #ffe88a;
+}
