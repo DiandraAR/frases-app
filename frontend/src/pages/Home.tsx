@@ -4,29 +4,38 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Bienvenida a la App ✨</h1>
-      <p>Elige un modo para comenzar:</p>
+    <div
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+        textAlign: "center",
+      }}
+    >
+      <h1 style={{ marginBottom: "10px" }}>Bienvenida a la App ✨</h1>
+      <p style={{ marginBottom: "25px" }}>Elige un modo para comenzar:</p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "20px" }}>
-        <button
-          onClick={() => navigate("/magic-message")}
-          style={{ padding: "10px", borderRadius: "8px", fontSize: "16px" }}
-        >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+          width: "100%",
+          maxWidth: "350px",
+        }}
+      >
+        <button style={btnStyle} onClick={() => navigate("/magic-message")}>
           🔮 Mensaje Mágico
         </button>
 
-        <button
-          onClick={() => navigate("/lucky-challenge")}
-          style={{ padding: "10px", borderRadius: "8px", fontSize: "16px" }}
-        >
+        <button style={btnStyle} onClick={() => navigate("/lucky-challenge")}>
           🍀 Reto de la Suerte
         </button>
 
-        <button
-          onClick={() => navigate("/naughty-elf")}
-          style={{ padding: "10px", borderRadius: "8px", fontSize: "16px" }}
-        >
+        <button style={btnStyle} onClick={() => navigate("/naughty-elf")}>
           😈 Duende Travieso
         </button>
       </div>
@@ -34,5 +43,16 @@ function Home() {
   );
 }
 
+const btnStyle = {
+  padding: "12px",
+  borderRadius: "10px",
+  fontSize: "17px",
+  cursor: "pointer",
+  background: "#f3f3f3",
+  border: "1px solid #ccc",
+  transition: "0.2s",
+};
+
 export default Home;
+
 
