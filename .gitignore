@@ -7,20 +7,23 @@ package-lock.json
 
 # Environment
 .env
-.env.local
-.env.development
-.env.production
+.env.*
+backend/.env
+backend/.env.*
 
 # Build output
 dist/
 build/
+backend/dist/
 
 # Database
 *.db
+
+# Drizzle internal
 drizzle/meta/
+backend/drizzle/meta/
 
 # Editor
 .vscode/
 .idea/
 .DS_Store
-
