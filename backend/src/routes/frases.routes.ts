@@ -12,59 +12,94 @@ import {
 
 const router = Router();
 
-// Obtener todas las frases
+/* ===============================
+    OBTENER TODAS LAS FRASES
+   =============================== */
 router.get("/", async (req, res) => {
   const frases = await getAllFrases();
   res.json(frases);
 });
 
-// Crear una frase
-router.post("/", async (req, res) => {
-  const { texto, categoria } = req.body;
-  if (!texto || !categoria) {
-    return res.status(400).json({ error: "Falta texto o categoría" });
-  }
-  const nuevaFrase = await createFrase(texto, categoria);
-  res.json(nuevaFrase);
-});
-
-// Buscar por texto 
-router.get("/buscar/:texto", async (req, res) => {
-  const resultados = await buscarFrasesPorTexto(req.params.texto);
-  res.json(resultados);
-});
-
-// Frase aleatoria 
-router.get("/random", async (req, res) => {
-  const aleatoria = await fraseAleatoria();
-  res.json(aleatoria);
-});
-
-// Obtener por ID 
-router.get("/:id", async (req, res) => {
-  const frase = await getFraseById(Number(req.params.id));
-  res.json(frase);
-});
-
-// Editar frase
-router.put("/:id", async (req, res) => {
-  const { texto, categoria } = req.body;
-  const frase = await updateFrase(Number(req.params.id), texto, categoria);
-  res.json(frase);
-});
-
-// Borrar frase
-router.delete("/:id", async (req, res) => {
-  const eliminada = await deleteFrase(Number(req.params.id));
-  res.json({ mensaje: "Frase eliminada", eliminada });
-});
-
-// Obtener frases por categoría
+/* ==========================================
+    OBTENER FRASES POR CATEGORÍA
+   ========================================== */
 router.get("/categoria/:categoria", async (req, res) => {
   const categoria = req.params.categoria;
   const frases = await buscarFrasesPorCategoria(categoria);
   res.json(frases);
 });
 
+/* ==========================================================
+    NUEVO: FRASE ALEATORIA POR CATEGORÍA (FUNCIONAL)
+   ========================================================== */
+router.get("/categoria/:categoria/random", async (req, res) => {
+  const categoria = req.params.categoria;
+  const frases = await buscarFrasesPorCategoria(categoria);
+
+  if (!frases || frases.length === 0) {
+    return res.status(404).json({ error: "No hay frases para esta categoría" });
+  }
+
+  const aleatoria = frases[Math.floor(Math.random() * frases.length)];
+  res.json(aleatoria);
+});
+
+/* ===============================
+    CREAR UNA FRASE
+   =============================== */
+router.post("/", async (req, res) => {
+  const { texto, categoria } = req.body;
+
+  if (!texto || !categoria) {
+    return res.status(400).json({ error: "Falta texto o categoría" });
+  }
+
+  const nuevaFrase = await createFrase(texto, categoria);
+  res.json(nuevaFrase);
+});
+
+/* =====================================
+    BUSCAR FRASE POR TEXTO
+   ===================================== */
+router.get("/buscar/:texto", async (req, res) => {
+  const resultados = await buscarFrasesPorTexto(req.params.texto);
+  res.json(resultados);
+});
+
+/* =========================================
+    FRASE ALEATORIA (GENERAL)
+   ========================================= */
+router.get("/random", async (req, res) => {
+  const aleatoria = await fraseAleatoria();
+  res.json(aleatoria);
+});
+
+/* =====================================
+    OBTENER FRASE POR ID
+   ===================================== */
+router.get("/:id", async (req, res) => {
+  const frase = await getFraseById(Number(req.params.id));
+  res.json(frase);
+});
+
+/* =====================================
+    EDITAR FRASE
+   ===================================== */
+router.put("/:id", async (req, res) => {
+  const { texto, categoria } = req.body;
+  const frase = await updateFrase(Number(req.params.id), texto, categoria);
+  res.json(frase);
+});
+
+/* =====================================
+    BORRAR FRASE
+   ===================================== */
+router.delete("/:id", async (req, res) => {
+  const eliminada = await deleteFrase(Number(req.params.id));
+  res.json({ mensaje: "Frase eliminada", eliminada });
+});
+
 export default router;
+
+
 
